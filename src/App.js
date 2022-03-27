@@ -5,6 +5,7 @@ import Grid from '../src/views/grid'
 import data from './ServiceData/data';
 
 const App = () =>{  
+     return (
      <div>
           <Grid/>
      </div>   

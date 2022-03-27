@@ -6,7 +6,7 @@ import data from './ServiceData/data';
 
 const App = () =>{  
      return (
-     <div>
+     <div className="gridContainer">
           <Grid/>
      </div>   
   );

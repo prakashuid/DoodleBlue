@@ -10,7 +10,7 @@ function Todo({ todo, index, markTodo, removeTodo, isChecked }) {
         { todo.isDone  ? <span className='myTodo' style={{ textDecoration: 'line-through'}}>{todo.text}</span>
         :<span className='myTodo' style={{ textDecoration: 'none'}}>{todo.text}</span>}
         <div className='row'>           
-           <div className='col-1'><Form.Check 
+           <div className='col-1' style={{marginLeft: '20px'}}><Form.Check 
             type={'checkbox'}                 
             id={`custom-${todo.text}`}
             onChange={() => markTodo(index)}
@@ -79,12 +79,14 @@ function Todo({ todo, index, markTodo, removeTodo, isChecked }) {
     return (
       
         <div className="container">
-          <h1 className="text-center mb-4">Todo List</h1>
+          <h1 className="text-center mb-4 pt-2">Todo List</h1>
           
           <div>
             {todos.map((todo, index) => (
               <Card className='cardTodo'>
                 <Card.Body>
+
+                  <p className='indexNumber'>{index + 1}</p>  
                   <Todo
                   key={index}
                   index={index}

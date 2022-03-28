@@ -9,7 +9,7 @@ import data from './ServiceData/data';
 
 const App = () =>{  
      return (
-     <div className="">
+     <div className="mt-5 borderRad">
           {/* <Grid/> */}
           <Todoview/>
      </div>   

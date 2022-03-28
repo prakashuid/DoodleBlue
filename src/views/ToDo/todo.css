@@ -7,11 +7,15 @@
 }
 .container{
     background-color: #b0dddd;
+    border-radius: 10px;
 }
-
+.indexNumber{
+    position: absolute;
+    margin-left: -5px;
+}
 .myTodo {
     position: absolute;
-    margin-left: 35px;
+    margin-left: 45px;
 }
 .marginLeft{
     margin-left: -15px;

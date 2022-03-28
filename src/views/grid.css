@@ -59,7 +59,5 @@ grid-column: 3/5;
     .item:nth-of-type(6){
         grid-column: 1;
         }
-    .item:nth-of-type(7){
-    grid-column: 1;
-    }
+
 }

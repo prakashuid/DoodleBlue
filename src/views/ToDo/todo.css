@@ -1,0 +1,22 @@
+.cardTodo {
+    
+    border-bottom: 0px solid rgba(0,0,0,.125) !important;
+    border-left: 0px solid rgba(0,0,0,.125) !important;
+    border-right: 0px solid rgba(0,0,0,.125) !important;
+    border-top: 1px solid rgba(0,0,0,.125) !important;
+}
+.container{
+    background-color: #b0dddd;
+}
+
+.myTodo {
+    position: absolute;
+    margin-left: 35px;
+}
+.marginLeft{
+    margin-left: -15px;
+}
+.form-control {
+border-radius: 0px !important;
+transition: none !important
+}

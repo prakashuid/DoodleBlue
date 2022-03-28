@@ -3,21 +3,21 @@ import axios from 'axios';
 import { Button, Card, Form, input } from 'react-bootstrap';
 import './todo.css'
 
-function Todo({ todo, index, markTodo, removeTodo, isChecked }) {    
-    console.log(`custom-${todo.text}`)
+function Todo({ todo, index, completedTodo, deleteTodo, isChecked }) {    
+    
     return (
       <div className="todo "  >         
-        { todo.isDone  ? <span className='myTodo' style={{ textDecoration: 'line-through'}}>{todo.text}</span>
-        :<span className='myTodo' style={{ textDecoration: 'none'}}>{todo.text}</span>}
+        { todo.completed  ? <span className='myTodo' style={{ textDecoration: 'line-through',  wordWrap: 'break-word'}}>{todo.title}</span>
+        :<span className='myTodo' style={{ textDecoration: 'none', wordWrap: 'break-word'}}>{todo.title}</span>}
         <div className='row'>           
            <div className='col-1' style={{marginLeft: '20px'}}><Form.Check 
             type={'checkbox'}                 
             id={`custom-${todo.text}`}
-            onChange={() => markTodo(index)}
+            onChange={() => completedTodo(index)}
       />
 </div> 
            <div className='col-8'></div> 
-           <div className='col-2'><Button variant="success" onClick={() => removeTodo(index)}>Delete</Button></div> 
+           <div className='col-2'><Button variant="success" onClick={() => deleteTodo(index)}>Delete</Button></div> 
           
           
         </div>
@@ -29,7 +29,7 @@ function Todo({ todo, index, markTodo, removeTodo, isChecked }) {
     const [value, setValue] = useState("");
   
     const handleSubmit = e => {
-      e.preventDefault();
+      e.preventDefault();      
       if (!value) return;
       addTodo(value);
       setValue("");
@@ -38,7 +38,7 @@ function Todo({ todo, index, markTodo, removeTodo, isChecked }) {
     return (
       <Form onSubmit={handleSubmit} className="row  mt-5" style={{marginBottom: '10px'}}> 
       <Form.Group className='col-9'>        
-        <Form.Control type="text" className="input" value={value} onChange={e => setValue(e.target.value)} placeholder="Add new todo" />
+        <Form.Control type="text" className="input" value={value} onChange={e => setValue(e.target.value)} placeholder="Add new todo..." />
       </Form.Group>
       <Button variant="success"  className='col-3 marginLeft mb-5' type="submit">
         Submit
@@ -50,27 +50,56 @@ function Todo({ todo, index, markTodo, removeTodo, isChecked }) {
   const  ToDoView =()=> {
     const [todos, setTodos] = useState([
       {
-        text: "Initial Todo List ...",
-        isDone: false
+        userId: 2,
+        id: 0 , 
+        title: "Initial Todo List ...",
+        completed: false
       }
     ]);
     const [isChecked, setIsChecked] = useState(false);
   
-    const addTodo = text => {
-      const newTodos = [...todos, { text }];
+    const addTodo = (title) => {
+
+        const nameChange = title;
+        const URL = "https://jsonplaceholder.typicode.com/todos";        
+        let details = {userId:3, id: todos.length +1, title: nameChange, completed: false}
+      const newTodos = [...todos, {details}];      
       setTodos(newTodos);
+
+      axios.post(URL, details)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    
     };
   
-    const markTodo = (index) => {
+       useEffect(()=>{
+        const URL = "https://jsonplaceholder.typicode.com/todos";
+        axios.get(URL)
+        .then((response) =>{            
+           const veryfiedData = response.data.filter((e)=>{
+                    return (e.userId == 3 && e.completed == false)
+            })            
+            setTodos(veryfiedData);            
+          })
+          .catch((error) =>{
+            console.log(error);
+          })
+    
+    },[])
 
-        console.log(index, !isChecked)
+    const completedTodo = (index) => {
       const newTodos = [...todos];
-      newTodos[index].isDone = true;
+      newTodos[index].completed = true;
       setTodos(newTodos);
       setIsChecked(!isChecked);
     };
   
-    const removeTodo = index => {
+    const deleteTodo = index => {
       const newTodos = [...todos];
       newTodos.splice(index, 1);
       setTodos(newTodos);
@@ -91,8 +120,8 @@ function Todo({ todo, index, markTodo, removeTodo, isChecked }) {
                   key={index}
                   index={index}
                   todo={todo}
-                  markTodo={markTodo}
-                  removeTodo={removeTodo}
+                  completedTodo={completedTodo}
+                  deleteTodo={deleteTodo}
                   isChecked={isChecked}
                   />
                 </Card.Body>

@@ -67,8 +67,10 @@ function Todo({ todo, index, completedTodo, deleteTodo, isChecked }) {
       setTodos(newTodos);
 
       axios.post(URL, details)
-      .then(function (response) {
-        console.log(response);
+      .then(function (response) {    
+        const newTodos = [...todos, response.data];    
+        setTodos(newTodos);
+        
       })
       .catch(function (error) {
         console.log(error);
